@@ -42,6 +42,12 @@ export class NewProductComponent {
       picture: ['', Validators.required ]
 
     })
+
+    if (this.data != null ){
+      this.updateForm(this.data);
+      this.estadoFormulario = "Actualizar ";
+      
+    }
   }
 
   onSave(){
@@ -62,12 +68,12 @@ export class NewProductComponent {
 
     if (this.data != null ){
       //Actualizar registro
-      // this.productService.updateProduct(data, this.data.id)
-      //         .subscribe( (data: any) =>{
-      //           this.dialogRef.close(1);
-      //         }, (error:any) =>{
-      //           this.dialogRef.close(2);
-      //         })
+      this.productService.updateProduct(uploadImageData, this.data.id)
+              .subscribe( (data: any) =>{
+                this.dialogRef.close(1);
+              }, (error:any) =>{
+                this.dialogRef.close(2);
+              })
     } else {
       //Crear un nuevo registro
       this.productService.saveProduct(uploadImageData)
@@ -98,6 +104,19 @@ export class NewProductComponent {
     console.log(this.selectedFile);
 
     this.nameImg = event.target.files[0].name;
+  }
+
+  updateForm(data: any){
+    this.productForm = this.fb.group( {
+      
+      name: [data.name, Validators.required ],
+      price: [data.price, Validators.required ],
+      account: [data.account, Validators.required ],
+      category: [data.category.id, Validators.required ],
+      picture: ['', Validators.required ]
+
+    });
+
   }
 
   

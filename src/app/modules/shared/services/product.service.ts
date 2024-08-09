@@ -21,4 +21,10 @@ export class ProductService {
     const endpoint =`${base_url}/products`;
     return this.http.post(endpoint, body);
   }
+
+    // Actualizar las categorias
+    updateProduct(body: any, id: any){
+      const endpoint = `${base_url}/products/${id}`;
+      return this.http.put(endpoint, body);
+    }
 }
