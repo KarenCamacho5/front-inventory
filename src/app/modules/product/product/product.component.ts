@@ -6,6 +6,7 @@ import { NewProductComponent } from '../new-product/new-product.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material/snack-bar';
 import { ConfirmComponent } from '../../shared/components/confirm/confirm.component';
+import { subscribe } from 'diagnostics_channel';
 
 
 @Component({
@@ -112,6 +113,17 @@ export class ProductComponent implements OnInit {
         this.openSnackBar("Se produjo un error al eliminar un producto", "Error");
       }
     });
+  }
+
+  buscar(name: any){
+    if (name.length ===0){
+      return this.getProducts();
+    }
+
+    this.productService.getProductByName(name)
+      .subscribe((resp: any) =>{
+        this.proccessProductResponse(resp);
+      })
   }
 
 }
